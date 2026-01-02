@@ -18,6 +18,18 @@ export default function LoginPage() {
         gradientColor="#D9D9D955"
       >
         <div>
+          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+            <p className="text-sm text-blue-800 text-center">
+              This is a demo page. Click{" "}
+              <Link
+                href="/auth/reset-password"
+                className="font-semibold underline hover:text-blue-900"
+              >
+                Forgot Password
+              </Link>{" "}
+              to redirect to /auth/reset-password
+            </p>
+          </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
           </h2>
