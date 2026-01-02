@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { MagicCard } from "@/components/ui/magic-card";
 
-export default function Home() {
+export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -17,18 +17,6 @@ export default function Home() {
         className="max-w-md w-full p-8 rounded-lg"
         gradientColor="#D9D9D955"
       >
-        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-          <p className="text-sm text-blue-800 text-center">
-            This is a demo page. Click{" "}
-            <Link
-              href="/auth/reset-password"
-              className="font-semibold underline hover:text-blue-900"
-            >
-              Forgot Password
-            </Link>{" "}
-            to redirect to /auth/reset-password
-          </p>
-        </div>
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
