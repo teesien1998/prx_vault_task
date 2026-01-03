@@ -19,6 +19,7 @@ Before you begin, ensure you have the following installed:
 - **npm** or **yarn** or **pnpm** (comes with Node.js)
 - **Git** - [Download](https://git-scm.com/)
 - **Supabase CLI** (optional, for local development) - [Installation Guide](https://supabase.com/docs/guides/cli)
+- **Deno extension** (optional, recommended for editing Edge Functions) - Install the Deno extension in your code editor (VS Code, etc.) for better development experience with Supabase Edge Functions
 
 ## Getting Started
 
@@ -53,6 +54,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 ### 4. Supabase Setup
+
+**Note**: This project already includes the `supabase/` directory, so you don't need to run `supabase init`.
 
 You have two options for Supabase setup:
 

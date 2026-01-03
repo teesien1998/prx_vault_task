@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { MagicCard } from "@/components/ui/magic-card";
 import { Confetti } from "@/components/ui/confetti";
 import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 // Password validation schema
 const resetPasswordSchema = z
@@ -128,15 +129,27 @@ export default function ResetPasswordPage() {
       // Log the response (you can see this in browser console)
       console.log("Edge Function response:", passwordResetData);
 
+      // Show success toast
+      toast.success("Password reset successful!", {
+        description: "Your password has been reset. Redirecting to login...",
+        duration: 3000,
+      });
+
       // Show success message
       setSuccess(true);
 
-      // Redirect to login after 2 seconds
+      // Redirect to login after 3 seconds
       setTimeout(() => {
         router.push("/auth/login");
-      }, 3000);
+      }, 2000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      const errorMessage =
+        err instanceof Error ? err.message : "An error occurred";
+      setError(errorMessage);
+      toast.error("Password reset failed", {
+        description: errorMessage,
+        duration: 5000,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -146,17 +159,15 @@ export default function ResetPasswordPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 relative">
         <Confetti className="absolute top-0 left-0 z-0 size-full" />
-        <div className="max-w-md w-full space-y-8 p-8 relative z-10">
+        <div className="max-w-lg w-full space-y-8 p-8 relative z-10">
           <div className="text-center">
-            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-              <CheckCircle2 className="h-6 w-6 text-green-600" />
+            <div className="mx-auto flex items-center justify-center h-18 w-18 rounded-full bg-green-100">
+              <CheckCircle2 className="h-12 w-12 text-green-600" />
             </div>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
               Password Reset Successful!
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Redirecting to login page...
-            </p>
+            <p className="mt-2 text-gray-600">Redirecting to login page...</p>
           </div>
         </div>
       </div>
@@ -170,7 +181,7 @@ export default function ResetPasswordPage() {
         gradientColor="#D9D9D955"
       >
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
             Reset Password
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -199,7 +210,7 @@ export default function ResetPasswordPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                  className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   aria-pressed={showPassword}
                   aria-controls="password"
@@ -207,9 +218,9 @@ export default function ResetPasswordPage() {
                   suppressHydrationWarning
                 >
                   {showPassword ? (
-                    <EyeOff size={16} strokeWidth={2} aria-hidden="true" />
+                    <EyeOff className="h-5 w-5" />
                   ) : (
-                    <Eye size={16} strokeWidth={2} aria-hidden="true" />
+                    <Eye className="h-5 w-5" />
                   )}
                 </button>
               </div>
