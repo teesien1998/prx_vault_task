@@ -18,6 +18,7 @@ Before you begin, ensure you have the following installed:
 - **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
 - **npm** or **yarn** or **pnpm** (comes with Node.js)
 - **Git** - [Download](https://git-scm.com/)
+- **Docker Desktop** (required for local development) - [Download](https://www.docker.com/products/docker-desktop/)
 - **Supabase CLI** (optional, for local development) - [Installation Guide](https://supabase.com/docs/guides/cli)
 - **Deno extension** (optional, recommended for editing Edge Functions) - Install the Deno extension in your code editor (VS Code, etc.) for better development experience with Supabase Edge Functions
 
