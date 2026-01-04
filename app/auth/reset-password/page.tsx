@@ -17,8 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { MagicCard } from "@/components/ui/magic-card";
 import { Confetti } from "@/components/ui/confetti";
+import { AuthForm } from "@/components/auth/auth-form";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
@@ -175,187 +175,176 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
-      <MagicCard
-        className="max-w-md w-full p-8 rounded-lg"
-        gradientColor="#D9D9D955"
-      >
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-            Reset Password
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your new password below
-          </p>
-        </div>
-        <form className="mt-8 space-y-6 " onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="password">New Password</Label>
-              <div className="relative" suppressHydrationWarning>
-                <Input
-                  {...register("password")}
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  placeholder="New Password"
-                  disabled={isLoading}
-                  aria-invalid={
-                    strengthScore < 4 || errors.password ? "true" : "false"
-                  }
-                  aria-describedby="password-description"
-                  className="pe-9"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  aria-pressed={showPassword}
-                  aria-controls="password"
-                  disabled={isLoading}
-                  suppressHydrationWarning
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
-                </button>
-              </div>
-
-              {password && (
-                <>
-                  <div
-                    className="mb-4 mt-3 h-1 w-full overflow-hidden rounded-full bg-border"
-                    role="progressbar"
-                    aria-valuenow={strengthScore}
-                    aria-valuemin={0}
-                    aria-valuemax={4}
-                    aria-label="Password strength"
-                  >
-                    <div
-                      className={`h-full ${getStrengthColor(
-                        strengthScore
-                      )} transition-all duration-500 ease-out`}
-                      style={{ width: `${(strengthScore / 4) * 100}%` }}
-                    ></div>
-                  </div>
-
-                  <p
-                    id="password-description"
-                    className="mb-2 text-sm font-medium text-foreground"
-                  >
-                    {getStrengthText(strengthScore)}. Must contain:
-                  </p>
-
-                  <ul
-                    className="space-y-1.5 mb-4"
-                    aria-label="Password requirements"
-                  >
-                    {strength.map((req, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        {req.met ? (
-                          <Check
-                            size={16}
-                            className="text-emerald-500 w-5 h-5"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <X
-                            size={16}
-                            className="text-red-500"
-                            aria-hidden="true"
-                          />
-                        )}
-                        <span
-                          className={`text-sm ${
-                            req.met ? "text-emerald-600" : "text-red-600"
-                          }`}
-                        >
-                          {req.text}
-                          <span className="sr-only">
-                            {req.met
-                              ? " - Requirement met"
-                              : " - Requirement not met"}
-                          </span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </>
+    <AuthForm
+      title="Reset Password"
+      description="Enter your new password below"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="password">New Password</Label>
+          <div className="relative" suppressHydrationWarning>
+            <Input
+              {...register("password")}
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder="New Password"
+              disabled={isLoading}
+              aria-invalid={
+                strengthScore < 4 || errors.password ? "true" : "false"
+              }
+              aria-describedby="password-description"
+              className="pe-9"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+              aria-controls="password"
+              disabled={isLoading}
+              suppressHydrationWarning
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
               )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <div className="relative" suppressHydrationWarning>
-                <Input
-                  {...register("confirmPassword")}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  placeholder="Confirm Password"
-                  disabled={isLoading}
-                  aria-invalid={errors.confirmPassword ? "true" : "false"}
-                  className="pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
-                  disabled={isLoading}
-                  suppressHydrationWarning
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
-                </button>
-              </div>
-              {errors.confirmPassword && (
-                <div className="flex items-center gap-2">
-                  <XCircle className="h-5 w-5 text-red-500" />
-                  <p className="text-sm text-red-600">
-                    {errors.confirmPassword.message}
-                  </p>
-                </div>
-              )}
-            </div>
+            </button>
           </div>
 
-          {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="flex">
-                <div className="shrink-0">
-                  <XCircle className="h-5 w-5 text-red-500" />
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm text-red-800">{error}</p>
-                </div>
+          {password && (
+            <>
+              <div
+                className="mb-4 mt-3 h-1 w-full overflow-hidden rounded-full bg-border"
+                role="progressbar"
+                aria-valuenow={strengthScore}
+                aria-valuemin={0}
+                aria-valuemax={4}
+                aria-label="Password strength"
+              >
+                <div
+                  className={`h-full ${getStrengthColor(
+                    strengthScore
+                  )} transition-all duration-500 ease-out`}
+                  style={{ width: `${(strengthScore / 4) * 100}%` }}
+                ></div>
               </div>
+
+              <p
+                id="password-description"
+                className="mb-2 text-sm font-medium text-foreground"
+              >
+                {getStrengthText(strengthScore)}. Must contain:
+              </p>
+
+              <ul
+                className="space-y-1.5 mb-4"
+                aria-label="Password requirements"
+              >
+                {strength.map((req, index) => (
+                  <li key={index} className="flex items-center gap-2">
+                    {req.met ? (
+                      <Check
+                        size={16}
+                        className="text-emerald-500 w-5 h-5"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <X
+                        size={16}
+                        className="text-red-500"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span
+                      className={`text-sm ${
+                        req.met ? "text-emerald-600" : "text-red-600"
+                      }`}
+                    >
+                      {req.text}
+                      <span className="sr-only">
+                        {req.met
+                          ? " - Requirement met"
+                          : " - Requirement not met"}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <div className="relative" suppressHydrationWarning>
+            <Input
+              {...register("confirmPassword")}
+              id="confirmPassword"
+              name="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder="Confirm Password"
+              disabled={isLoading}
+              aria-invalid={errors.confirmPassword ? "true" : "false"}
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              disabled={isLoading}
+              suppressHydrationWarning
+            >
+              {showConfirmPassword ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+          {errors.confirmPassword && (
+            <div className="flex items-center gap-2">
+              <XCircle className="h-5 w-5 text-red-500" />
+              <p className="text-sm text-red-600">
+                {errors.confirmPassword.message}
+              </p>
             </div>
           )}
+        </div>
+      </div>
 
-          <div>
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="cursor-pointer w-full bg-indigo-600 hover:bg-indigo-700 text-white disabled:bg-indigo-400"
-            >
-              {isLoading ? (
-                <div className="flex items-center gap-2">
-                  <Loader2Icon className="h-5 w-5 animate-spin" /> Processing...
-                </div>
-              ) : (
-                "Reset Password"
-              )}
-            </Button>
+      {error && (
+        <div className="rounded-md bg-red-50 p-4">
+          <div className="flex">
+            <div className="shrink-0">
+              <XCircle className="h-5 w-5 text-red-500" />
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
           </div>
-        </form>
-      </MagicCard>
-    </div>
+        </div>
+      )}
+
+      <div>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="cursor-pointer w-full bg-indigo-600 hover:bg-indigo-700 text-white disabled:bg-indigo-400"
+        >
+          {isLoading ? (
+            <div className="flex items-center gap-2">
+              <Loader2Icon className="h-5 w-5 animate-spin" /> Processing...
+            </div>
+          ) : (
+            "Reset Password"
+          )}
+        </Button>
+      </div>
+    </AuthForm>
   );
 }
