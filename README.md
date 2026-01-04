@@ -27,11 +27,9 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/prx-vault-task.git
-cd prx-vault-task
+git clone https://github.com/teesien1998/prx_vault_task.git
+cd prx_vault_task
 ```
-
-Replace `yourusername` with your actual GitHub username or the repository URL.
 
 ### 2. Install Dependencies
 
@@ -97,8 +95,8 @@ You have two options for Supabase setup:
    # Login to Supabase CLI
    npx supabase login
 
-   # Link your project (get project-ref from Settings → General → Reference ID)
-   npx supabase link --project-ref your-project-ref
+   # Link your project (select a project when prompted)
+   npx supabase link
 
    # Deploy the Edge Function
    npx supabase functions deploy log-password-reset
@@ -191,7 +189,7 @@ prx-vault-task/
      - Enter the same password in confirm password field
      - Click "Reset Password"
      - Verify success message and confetti animation
-     - Verify redirect to login page after 3 seconds
+     - Verify redirect to login page after 2 seconds
 
 3. **Edge Function Testing**
    - After submitting the password reset form, check:
@@ -225,23 +223,12 @@ prx-vault-task/
 
    - Shows loading state with spinner
    - Calls Supabase Edge Function with email and reset time
-   - Displays success message with confetti
+   - Displays success message
    - Redirects to `/auth/login` after 3 seconds
 
 3. **Edge Function**:
-   - Logs password reset event with email and timestamp
-   - Returns `{ status: "logged" }` on success
-
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-
-## Deployment
-
-For deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+   - Logs password reset event with email and timestamp to the terminal (where `npx supabase functions serve log-password-reset` is running)
+   - Returns `{ status: "logged" }` on success (printed in browser DevTools console)
 
 ## Troubleshooting
 
@@ -258,21 +245,10 @@ For deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
 - Restart the development server after adding/changing environment variables
 - Never commit `.env.local` to git (it's already in `.gitignore`)
 
-### CORS Errors
-
-- Supabase handles CORS automatically for Edge Functions
-- If issues persist, check Supabase Dashboard → Edge Functions settings
-
 ### Port Already in Use
 
 - If port 3000 is in use, Next.js will automatically use the next available port
 - Check the terminal output for the actual URL
-
-## Security Notes
-
-- ✅ `NEXT_PUBLIC_SUPABASE_ANON_KEY` is safe to expose (it's a public key)
-- ⚠️ Never commit `.env.local` or any files with sensitive credentials
-- ⚠️ The anon key has limited permissions based on Row Level Security (RLS) policies
 
 ## Support
 
