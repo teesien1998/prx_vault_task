@@ -188,8 +188,7 @@ prx-vault-task/
      - Enter a password that meets all requirements (e.g., `Test1234!@`)
      - Enter the same password in confirm password field
      - Click "Reset Password"
-     - Verify success message and confetti animation
-     - Verify redirect to login page after 2 seconds
+     - Verify success toast message appears and redirect to login page after 2 seconds
 
 3. **Edge Function Testing**
    - After submitting the password reset form, check:
@@ -203,11 +202,10 @@ prx-vault-task/
 - [ ] Navigation to reset password page works
 - [ ] Password validation errors display correctly
 - [ ] Valid password submission works
-- [ ] Success message and confetti animation appear
-- [ ] Redirect to login page works after success
+- [ ] Success toast message appears and redirect to login page works
 - [ ] Edge Function is called successfully (check console/logs)
 - [ ] Form shows loading state during submission
-- [ ] Error messages display if Edge Function fails
+- [ ] Error toast messages display if Edge Function fails
 - [ ] Password visibility toggle works (eye icon)
 
 ### Expected Behavior
